@@ -1,0 +1,16 @@
+#!/bin/bash          
+
+dir_source=source
+dir_templates=templates
+dir_static=static
+
+# Read list of blog posts currently available
+i=0
+ls $dir_source/ | grep html | while read file
+do
+    array[$i]="$file"
+    #echo $line
+    cp -u $dir_source/$file $dir_static/$file
+    # POST PROCESS FILES HERE ADDING HTML ELEMENTS
+    ((i++))
+done
