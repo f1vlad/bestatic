@@ -12,5 +12,11 @@ do
     #echo $line
     cp $dir_source/$file $dir_static/$file
     # POST PROCESS FILES HERE ADDING HTML ELEMENTS
+
+    sed -i -e 's/~header~/<html>/g' $dir_static/$file
+    sed -i -e 's/~footer~/<\/html>/g' $dir_static/$file
+    sed -i -e 's/~nav~/<nav><\/nav>/g' $dir_static/$file
+    rm -fr $dir_static/$file-e
+
     ((i++))
 done
