@@ -4,6 +4,10 @@ dir_source=source
 dir_templates=templates
 dir_static=static
 
+template_header=`cat $dir_templates/header.html`
+template_footer=`cat $dir_templates/footer.html`
+template_nav=`cat $dir_templates/nav.html`
+
 # Read list of blog posts currently available
 i=0
 ls $dir_source/ | grep html | while read file
@@ -13,9 +17,10 @@ do
     cp $dir_source/$file $dir_static/$file
     # POST PROCESS FILES HERE ADDING HTML ELEMENTS
 
-    sed -i -e 's/~header~/<html>/g' $dir_static/$file
-    sed -i -e 's/~footer~/<\/html>/g' $dir_static/$file
-    sed -i -e 's/~nav~/<nav><\/nav>/g' $dir_static/$file
+
+    sed -i -e "s/~header~/$template_header/g" $dir_static/$file
+    sed -i -e "s/~footer~/$template_footer/g" $dir_static/$file
+    sed -i -e "s/~nav~/$template_nav/g" $dir_static/$file
     rm -fr $dir_static/$file-e
 
     ((i++))
