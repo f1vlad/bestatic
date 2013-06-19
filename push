@@ -8,19 +8,19 @@ template_header=`cat $dir_templates/header.html`
 template_footer=`cat $dir_templates/footer.html`
 template_nav=`cat $dir_templates/nav.html`
 
-
+ls $dir_source > filelist.tmp
+exec 0<filelist.tmp
 
 i=0
-ls $dir_source/ | grep html | while read file
+while read LINE
 do
-    array[$i]="$file"
+    array[$i]="$LINE"
     #echo $line
-    cp $dir_source/$file $dir_static/$file
+    cp $dir_source/$LINE $dir_static/$LINE
 
-    sed -i -e "s/~header~/$template_header/g" $dir_static/$file
-    sed -i -e "s/~footer~/$template_footer/g" $dir_static/$file
-    sed -i -e "s/~nav~/$template_nav/g" $dir_static/$file
-    rm -fr $dir_static/$file-e
-
+    sed -i -e "s/~header~/$template_header/g" $dir_static/$LINE
+    sed -i -e "s/~footer~/$template_footer/g" $dir_static/$LINE
+    sed -i -e "s/~nav~/$template_nav/g" $dir_static/$LINE
+    rm -fr $dir_static/$LINE-e
     ((i++))
 done
