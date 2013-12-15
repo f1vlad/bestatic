@@ -1,4 +1,4 @@
-#!/bin/bash          
+#!/bin/bash
 
 dir_source=source # original blog posts
 dir_templates=templates # templates for the blogs
@@ -30,13 +30,51 @@ do
     sed -i -e "s/~nav~/$template_nav/g" $dir_static/$LINE
     rm -fr $dir_static/$LINE-e
 
-
     blog_title=`cat $dir_source/$LINE | grep "$blog_title_html_wrap" | sed "s/<$blog_title_html_wrap>//g;s/<\/$blog_title_html_wrap>//g"`
     blog_time=`cat $dir_source/$LINE | grep "$blog_time_html_wrap" | sed "s/<$blog_time_html_wrap>//g;s/<\/$blog_time_html_wrap>//g"`
-
-    blog_index+="<a href=\"./$LINE\">$blog_title <time>$blog_time</time></a>"
-
+    blog_index+="<li><a href=\"./$LINE\">$blog_title</a> <sup><time>$blog_time</time></sup></li>"
     ((i++))
 done
 
+blog_index=" ~header~~nav~<ul>$blog_index</ul>~footer~"
 echo $blog_index > $dir_static/index.html
+sed -i -e "s/~header~/$template_header/g" $dir_static/index.html
+sed -i -e "s/~footer~/$template_footer/g" $dir_static/index.html
+sed -i -e "s/~nav~/$template_nav/g" $dir_static/index.html
+rm -fr $dir_static/index.html-e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
