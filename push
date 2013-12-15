@@ -15,7 +15,9 @@ template_header=`cat $dir_templates/header.html`
 template_footer=`cat $dir_templates/footer.html`
 template_nav=`cat $dir_templates/nav.html`
 
-ls $dir_source > filelist.tmp
+#ls $dir_source > filelist.tmp
+ls $dir_source | sed '1!G;h;$!d' > filelist.tmp # output in reverse order, eg. when using timestamps for filenames, which are descending
+
 exec 0<filelist.tmp
 
 i=0
