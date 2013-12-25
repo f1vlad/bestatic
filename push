@@ -1,13 +1,16 @@
 #!/bin/bash
 
+blog_url="http://example.com"
+blog_site_name="Be Static Blog"
+
 dir_source=source # original blog posts
 dir_templates=templates # templates for the blogs
 dir_static=static # generated blog posts
 
-blog_site_name="f1vlad.com"
 blog_title_html_wrap="h1"
 blog_time_html_wrap="time"
 blog_index=""
+blog_rss=""
 
 
 #------
@@ -37,6 +40,7 @@ do
     this_line="$blog_time-$blog_title_alt.html" # currently files are sorted by unix timestamp, it's suggested to keep this line intact
 
     blog_index+="<li><a href=\"./$this_line\">$blog_title</a> <sup><time data-unix-timestamp=\"$blog_time\">$blog_friendly_time</time></sup></li>"
+    blog_rss+="<item><title>$blog_title</title><link>$blog_url/$dir_static/$this_line</link><description>$blog_title</description></item>"
 
     cp $dir_source/$LINE $dir_static/$this_line
 
@@ -50,8 +54,10 @@ do
     ((i++))
 done
 
-blog_index=" ~header~~nav~<ul>$blog_index</ul>~footer~"
+blog_index=" ~header~~nav~<ul>$blog_index</ul><aside><a href=\"index.rss\">rss</a></aside>~footer~"
 echo $blog_index > $dir_static/index.html
+blog_rss="<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><rss version=\"2.0\"><channel><title>$blog_site_name</title><link>$blog_url</link><description></description>$blog_rss</channel></rss>"
+echo $blog_rss > $dir_static/index.rss
 sed -i -e "s/~header~/$template_header/g" $dir_static/index.html
 sed -i -e "s/~footer~/$template_footer/g" $dir_static/index.html
 sed -i -e "s/~nav~/$template_nav/g" $dir_static/index.html
