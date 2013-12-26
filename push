@@ -6,6 +6,7 @@ blog_site_name="Be Static Blog"
 dir_source=source # original blog posts
 dir_templates=templates # templates for the blogs
 dir_static=static # generated blog posts
+dir_img=i
 
 blog_title_html_wrap="h1"
 blog_time_html_wrap="time"
@@ -48,6 +49,14 @@ do
     sed -i -e "s/~nav~/$template_nav/g" $dir_static/$this_line
     sed -i -e "s/~post_title~/$blog_title \| $blog_site_name/g" $dir_static/$this_line
     sed -i -e "s/$blog_time/$blog_friendly_time/g" $dir_static/$this_line
+
+
+
+    sed -i -e "s/:)/<img src=\"$dir_img\/regular_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
+    sed -i -e "s/:(/<img src=\"$dir_img\/sad_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
+
+
+
 
     rm -fr $dir_static/$LINE-e
     ((i++))
