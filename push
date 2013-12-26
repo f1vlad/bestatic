@@ -17,6 +17,8 @@ template_header=`cat $dir_templates/header.html`
 template_footer=`cat $dir_templates/footer.html`
 template_nav=`cat $dir_templates/nav.html`
 
+emotions=true # convert some smiley icons into animated icons
+
 #------
 
 #ls $dir_source > filelist.tmp
@@ -50,13 +52,10 @@ do
     sed -i -e "s/~post_title~/$blog_title \| $blog_site_name/g" $dir_static/$this_line
     sed -i -e "s/$blog_time/$blog_friendly_time/g" $dir_static/$this_line
 
-
-
-    sed -i -e "s/:)/<img src=\"$dir_img\/regular_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
-    sed -i -e "s/:(/<img src=\"$dir_img\/sad_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
-
-
-
+    if [ $emotions = true ]; then
+        sed -i -e "s/:)/<img src=\"$dir_img\/regular_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
+        sed -i -e "s/:(/<img src=\"$dir_img\/sad_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
+    fi
 
     rm -fr $dir_static/$LINE-e
     ((i++))
