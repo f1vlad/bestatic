@@ -26,16 +26,17 @@ ls $dir_source | sed '1!G;h;$!d' > filelist.tmp # output in reverse order, eg. w
 
 exec 0<filelist.tmp
 
+printf "\nbestatic (https://github.com/f1vlad/bestatic)\n--------\n"
 i=0
 while read LINE
 do
     array[$i]="$LINE"
-    #echo $this_line
 
     blog_title=`cat $dir_source/$LINE | grep "$blog_title_html_wrap" | sed "s/<$blog_title_html_wrap>//g;s/<\/$blog_title_html_wrap>//g"`
     blog_time=`cat $dir_source/$LINE | grep "$blog_time_html_wrap" | sed "s/<$blog_time_html_wrap>//g;s/<\/$blog_time_html_wrap>//g"`
     blog_friendly_time=`date -r$blog_time`
 
+    printf "[s] $blog_title ($blog_friendly_time)"
 
     blog_title_alt=${blog_title//[^a-zA-Z0-9]/}  # get rid of non alphanumerical charachters
     blog_title_alt=$(echo "$blog_title_alt" |  tr '[:upper:]' '[:lower:]' ) # lower case names of files
@@ -60,8 +61,10 @@ do
     ((i++))
 done
 
+printf "[s] Index of blog entries"
 blog_index=" ~header~~nav~<ul>$blog_index</ul><aside><a href=\"index.rss\">rss</a></aside>~footer~"
 echo $blog_index > $dir_static/index.html
+printf "[s] Blog rss feed"
 blog_rss="<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><rss version=\"2.0\"><channel><title>$blog_site_name</title><link>$blog_url</link><description></description>$blog_rss</channel></rss>"
 echo $blog_rss > $dir_static/index.rss
 sed -i -e "s/~header~/$template_header/g" $dir_static/index.html
@@ -69,7 +72,7 @@ sed -i -e "s/~footer~/$template_footer/g" $dir_static/index.html
 sed -i -e "s/~nav~/$template_nav/g" $dir_static/index.html
 sed -i -e "s/~post_title~/Blog Index \| $blog_site_name/g" $dir_static/index.html
 rm -fr $dir_static/index.html-e
-
+printf "\nDone!\n"
 
 
 
