@@ -53,8 +53,7 @@ do
     sed -i -e "s/$blog_time/$blog_friendly_time/g" $dir_static/$this_line
 
     if [ $emotions = true ]; then
-        sed -i -e "s/:)/<img src=\"$dir_img\/regular_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
-        sed -i -e "s/:(/<img src=\"$dir_img\/sad_smile.gif\" alt=\"\"\/>/g" $dir_static/$this_line
+        source $(dirname $0)/emotions.sh
     fi
 
     rm -fr $dir_static/$LINE-e
