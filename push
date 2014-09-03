@@ -35,7 +35,7 @@ do
 
     array[$i]="$LINE"
 
-    blog_title=`cat $dir_source/$LINE | grep "$blog_title_html_wrap" | sed "s/<$blog_title_html_wrap>//g;s/<\/$blog_title_html_wrap>//g"`
+    blog_title=`cat $dir_source/$LINE | grep "<$blog_title_html_wrap>" | sed "s/<$blog_title_html_wrap>//g;s/<\/$blog_title_html_wrap>//g"`
     blog_time=`cat $dir_source/$LINE | grep "<$blog_time_html_wrap>" | sed "s/<$blog_time_html_wrap>//g;s/<\/$blog_time_html_wrap>//g"`
     blog_friendly_time=`date -r $blog_time`
     blog_title_alt=${blog_title//[^a-zA-Z0-9]/}  # get rid of non alphanumerical charachters
