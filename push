@@ -17,6 +17,7 @@ template_header=`cat $dir_templates/header.html`
 template_footer=`cat $dir_templates/footer.html`
 template_nav=`cat $dir_templates/nav.html`
 
+
 emotions=true # convert some smiley icons into animated icons
 
 #------
@@ -59,8 +60,7 @@ do
     fi
 
     printf "\n[s] $i. $blog_title, $this_line"
-
-    rm -fr $dir_static/$LINE-e
+    rm -f $dir_static/$this_line-e
     ((i++))
 done
 
@@ -76,39 +76,3 @@ sed -i -e "s/~nav~/$template_nav/g" $dir_static/index.html
 sed -i -e "s/~post_title~/Blog Index \| $blog_site_name/g" $dir_static/index.html
 rm -fr $dir_static/index.html-e
 printf "\nDone!\n"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
